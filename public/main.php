@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../includes/helpers.php';
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/timeago.php'; 
+require_once __DIR__ . '/../includes/navbar.php'; 
+
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -11,6 +13,7 @@ if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
+
 
 // fetch user
 $stmt = $pdo->prepare('SELECT * FROM `users` WHERE id = ? LIMIT 1');
@@ -53,13 +56,13 @@ function e($v){ return htmlspecialchars((string)$v); }
   <style>
     :root{--muted:#6b7280;--accent:#457eff}
     body{margin:0;font-family:Inter,Segoe UI,Arial;background:#f8fafc;color:#111}
-    header.top{background:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee}
+    /* header.top{background:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee} */
     .brand{display:flex;align-items:center;gap:12px}
     .brand img{height:36px}
-    .nav-links{display:flex;gap:18px;align-items:center}
+    /* .nav-links{display:flex;gap:18px;align-items:center}
     .search-box{flex:1;max-width:520px;margin:0 24px;display:flex}
     .search-box input{flex:1;padding:10px 14px;border:1px solid #e6e9ee;border-radius:24px 0 0 24px;outline:none}
-    .search-box button{padding:10px 14px;border:1px solid #e6e9ee;border-left:0;background:#fff;border-radius:0 24px 24px 0;cursor:pointer}
+    .search-box button{padding:10px 14px;border:1px solid #e6e9ee;border-left:0;background:#fff;border-radius:0 24px 24px 0;cursor:pointer} */
     .container{display:flex;gap:28px;padding:28px;max-width:1200px;margin:0 auto}
     .left{flex:0 0 260px}
     .card{background:#fff;border-radius:12px;padding:18px;border:1px solid #f1f4f8}
@@ -76,38 +79,38 @@ function e($v){ return htmlspecialchars((string)$v); }
   </style>
 </head>
 <body>
-  <header class="top">
-    <div class="brand">
-      <img src="assets/image/serphawklogo.png" alt="Logo">
-      <div class="nav-links">
-        <a href="main.php">Jobs</a>
-        <a href="#">Companies</a>
-        <a href="#">Services</a>
-      </div>
-    </div>
-
-    <div class="search-box">
-      <input id="jobSearch" placeholder="Search jobs here (title, skill or company)" />
-      <button id="searchBtn"><i class="fa fa-search"></i></button>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:14px">
-      <div id="notif" style="position:relative;cursor:pointer">
-        <i class="fa fa-bell"></i>
-        <span id="notifCount" style="position:absolute;top:-8px;right:-10px;background:#ef4444;color:#fff;border-radius:999px;padding:3px 7px;font-size:12px;display:none"></span>
-      </div>
-      <div style="position:relative">
-        <div>
-          <img id="profileAvatar" src="<?= e($user['profile_photo'] ?: 'assets/image/avatar.png') ?>" style="width:40px;height:40px;border-radius:50%;cursor:pointer">
-        </div>        
-        <div id="profileMenu" style="display:none;position:absolute;right:0;top:48px;background:#fff;border:1px solid #eee;padding:8px;border-radius:8px;min-width:160px">
-          <a href="profile.php" style="display:block;padding:8px;color:#111;text-decoration:none">View / Update Profile</a>
-          <a href="logout.php" style="display:block;padding:8px;color:#111;text-decoration:none">Logout</a>
+    <!-- <header class="top">
+      <div class="brand">
+        <img src="assets/image/serphawklogo.png" alt="Logo">
+        <div class="nav-links">
+          <a href="main.php">Jobs</a>
+          <a href="#">Companies</a>
+          <a href="#">Services</a>
         </div>
       </div>
-    </div>
-  </header>
 
+      <div class="search-box">
+        <input id="jobSearch" placeholder="Search jobs here (title, skill or company)" />
+        <button id="searchBtn"><i class="fa fa-search"></i></button>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:14px">
+        <div id="notif" style="position:relative;cursor:pointer">
+          <i class="fa fa-bell"></i>
+          <span id="notifCount" style="position:absolute;top:-8px;right:-10px;background:#ef4444;color:#fff;border-radius:999px;padding:3px 7px;font-size:12px;display:none"></span>
+        </div>
+        <div style="position:relative">
+          <div>
+            <img id="profileAvatar" src="<?= e($user['profile_photo'] ?: 'assets/image/avatar.png') ?>" style="width:40px;height:40px;border-radius:50%;cursor:pointer">
+          </div>        
+          <div id="profileMenu" style="display:none;position:absolute;right:0;top:48px;background:#fff;border:1px solid #eee;padding:8px;border-radius:8px;min-width:160px">
+            <a href="profile.php" style="display:block;padding:8px;color:#111;text-decoration:none">View / Update Profile</a>
+            <a href="logout.php" style="display:block;padding:8px;color:#111;text-decoration:none">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+  -->
   <main class="container">
     <aside class="left">
       <div class="card" style="text-align:center">
@@ -192,3 +195,6 @@ refreshNotifs();
 </script>
 </body>
 </html>
+
+
+<?php include "footer.php" ?>

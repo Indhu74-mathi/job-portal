@@ -100,12 +100,63 @@ CREATE TABLE personal_details (
 
 
 -- Applications table
-CREATE TABLE IF NOT EXISTS job_applications (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  job_id INT UNSIGNED NOT NULL,
-  user_id INT UNSIGNED NOT NULL,
-  applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY uniq_job_user (job_id, user_id),
-  CONSTRAINT fk_app_job FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE,
-  CONSTRAINT fk_app_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+-- CREATE TABLE IF NOT EXISTS job_applications (
+--   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+--   job_id INT UNSIGNED NOT NULL,
+--   user_id INT UNSIGNED NOT NULL,
+--   applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   UNIQUE KEY uniq_job_user (job_id, user_id),
+--   CONSTRAINT fk_app_job FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE,
+--   CONSTRAINT fk_app_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+-- );
+
+
+
+
+-- CREATE TABLE recruiter_jobs (
+--     job_id INT AUTO_INCREMENT PRIMARY KEY,
+--     recruiter_id INT NOT NULL,
+--     job_title VARCHAR(255) NOT NULL,
+--     job_description TEXT NOT NULL,
+--     location VARCHAR(255),
+--     salary VARCHAR(100),
+--     job_type ENUM('Full-Time', 'Part-Time', 'Internship') NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+
+CREATE TABLE recruiters (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    company_name VARCHAR(150) NOT NULL,
+    location VARCHAR(150),
+    contact_number VARCHAR(20),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE recruiter_jobs (
+    job_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    recruiter_id INT UNSIGNED NOT NULL,
+    job_title VARCHAR(255) NOT NULL,
+    job_description TEXT NOT NULL,
+    location VARCHAR(255),
+    salary VARCHAR(100),
+    job_type ENUM('Full-Time', 'Part-Time', 'Internship') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO recruiter_jobs (recruiter_id, job_title, job_description, location, salary, job_type)
+VALUES 
+(1, 'PHP Developer', 'Looking for an experienced PHP developer', 'Chennai', '4.5 LPA', 'Full-Time'),
+(2, 'Frontend Developer', 'React.js developer needed', 'Bangalore', '5 LPA', 'Full-Time');
+
+
+CREATE TABLE job_applications (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    job_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uniq_job_user (job_id, user_id),
+    CONSTRAINT fk_app_job FOREIGN KEY (job_id) REFERENCES recruiter_jobs(job_id) ON DELETE CASCADE,
+    CONSTRAINT fk_app_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

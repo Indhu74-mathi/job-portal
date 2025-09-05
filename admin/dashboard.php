@@ -32,7 +32,7 @@ $jobs = $pdo->query('SELECT COUNT(*) FROM jobs')->fetchColumn();
       <a href="dashboard.php">Overview</a>
       <a href="job_create.php">Job Update (Add New)</a>
       <a href="applied_jobs.php">Applied Jobs</a>
-      <a href="../main.php">Back to Site</a>
+      <a href="../register/logout.php">Back to Site</a>
     </aside>
     <main class="main">
       <h2>Overview</h2>
